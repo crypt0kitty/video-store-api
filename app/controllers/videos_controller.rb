@@ -13,11 +13,19 @@ class VideosController < ApplicationController
       return
     end
 
-    render json: video.as_json(only: [:title, :overview, :release_date, :total_inventory, :available_inventory]), status: :ok
+    # formatted_date = video.release_date.to_formatted_s(:long_ordinal)
+    # video.release_date = formatted_date
+
+    render json: video.as_json(only: [:title, :overview, :release_date, :total_inventory, :available_inventory]),
+           status: :ok
   end
 
   def create
-    video = Video.new(title: params[:title], overview: params[:overview], release_date: params[:release_date], total_inventory: params[:total_inventory], available_inventory: params[:available_inventory])
+    video = Video.new(title: params[:title],
+                      overview: params[:overview],
+                      release_date: params[:release_date],
+                      total_inventory: params[:total_inventory],
+                      available_inventory: params[:available_inventory])
 
     if video.save
       render json: video.as_json(only: [:title]), status: :created
