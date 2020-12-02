@@ -17,13 +17,14 @@ class VideosController < ApplicationController
   end
 
   def create
-    video = Video.new.as_json(title: params[:title], overview: params[:overview], release_date: params[:release_date], total_inventory: params[:total_inventory], available_inventory: params[:available_inventory])
+    video = Video.new(title: params[:title], overview: params[:overview], release_date: params[:release_date], total_inventory: params[:total_inventory], available_inventory: params[:available_inventory])
 
     if video.save
-      render json: video.as_json(only: [:title, :overview, :release_date, :total_inventory, :available_inventory]), status: :created
+      render json: video.as_json(only: [:title]), status: :created
+      return
     else
       render json: {ok: false,
-                    message: video.errors.messages}, status: :bad_request
+                    errors: video.errors.messages}, status: :bad_request
       return
     end
 
