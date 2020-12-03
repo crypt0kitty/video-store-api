@@ -14,6 +14,7 @@ class VideosController < ApplicationController
     end
 
     # formatted_date = video.release_date.to_formatted_s(:long_ordinal)
+    # puts formatted_date
     # video.release_date = formatted_date
 
     render json: video.as_json(only: [:title, :overview, :release_date, :total_inventory, :available_inventory]),
@@ -28,7 +29,7 @@ class VideosController < ApplicationController
                       available_inventory: params[:available_inventory])
 
     if video.save
-      render json: video.as_json(only: [:title]), status: :created
+      render json: video.as_json(only: [:id]), status: :created
       return
     else
       render json: {ok: false,
